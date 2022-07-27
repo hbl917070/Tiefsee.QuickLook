@@ -5,7 +5,7 @@
 <br><br>
 程式碼來自：https://github.com/QL-Win/QuickLook
 
-<br><hr><br>
+<hr>
 
 This project is a Plugin for [Tiefsee4](https://github.com/hbl917070/Tiefsee4),<br>
 When you are on the desktop or in a folder, press and hold the blank key to preview the file through Tiefsee.
