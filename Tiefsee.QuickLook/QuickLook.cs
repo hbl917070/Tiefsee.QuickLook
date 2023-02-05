@@ -21,6 +21,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Tiefsee {
@@ -76,20 +77,21 @@ namespace Tiefsee {
                 return "";
             }
 
-            StringBuilder sb = null;
-            try {
-                // communicate with COM in a separate thread
-                Task.Run(() => {
-                    sb = new StringBuilder(MaxPath);
+            StringBuilder sb = new StringBuilder(MaxPath);
+            // communicate with COM in a separate STA thread
+            var thread = new Thread(() => {
+                try {
                     if (Is64Bit)
                         GetCurrentSelectionNative_64(sb);
                     else
                         GetCurrentSelectionNative_32(sb);
-                }).Wait();
-            } catch (Exception e) {
-                Debug.WriteLine(e);
-            }
-
+                } catch (Exception e) {
+                    Debug.WriteLine(e);
+                }
+            });
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+            thread.Join();
             return ResolveShortcut(sb?.ToString() ?? string.Empty);
         }
 
