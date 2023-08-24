@@ -48,7 +48,10 @@ namespace Tiefsee {
         [DllImport("QuickLook.Native64.dll", EntryPoint = "GetCurrentSelection", CallingConvention = CallingConvention.Cdecl)]
         private static extern void GetCurrentSelectionNative_64([MarshalAs(UnmanagedType.LPWStr)] StringBuilder sb);
 
+        private static bool isInited = false;
+
         internal static void Init() {
+            isInited = true;
             try {
                 if (Is64Bit)
                     Init_64();
@@ -73,6 +76,10 @@ namespace Tiefsee {
         /// </summary>
         /// <returns></returns>
         public static string GetCurrentSelection() {
+            if (isInited == false) {
+                Init();
+            }
+
             if (QuickLook.GetFocusedWindowType() == QuickLook.FocusedWindowType.Invalid) {
                 return "";
             }
