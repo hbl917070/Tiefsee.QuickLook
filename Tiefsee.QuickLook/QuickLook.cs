@@ -80,7 +80,8 @@ namespace Tiefsee {
                 Init();
             }
 
-            if (QuickLook.GetFocusedWindowType() == QuickLook.FocusedWindowType.Invalid) {
+            FocusedWindowType focusedWindowType = QuickLook.GetFocusedWindowType();
+            if (focusedWindowType == QuickLook.FocusedWindowType.Invalid) {
                 return "";
             }
 
