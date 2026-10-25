@@ -7,3 +7,5 @@
 /Tiefsee.QuickLook/bin/
 /Build/
 /Output/
+/Native/QuickLook.Native32/Win32/
+/Native/QuickLook.Native64/x64/
